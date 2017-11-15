@@ -2,12 +2,12 @@ class board_square:
 	def __init__(self):
 		self.fillCount = 0
 		self.val = 0
-		self.valid = true
+		self.valid = True
 
 	def reset(self):
 		self.fillCount = 0
 		self.val = 0
-		self.valid = true
+		self.valid = True
 
 	def line_filled(self,val):
 		if val == 0:
@@ -57,7 +57,7 @@ class game_board:
 	def completes_square(self,x,y,z,val):
 		for square in self.get_affected_squares(x,y):
 			if square.completes_square(x,y,val):
-				return true
+				return True
 		return false
 
 	def is_valid_move(self,x,y,z,val):
@@ -79,5 +79,5 @@ class game_board:
 		for i in range(self.rows*self.cols):
 			if not self.squaresState[i].is_complete():
 				return false
-		return true
+		return True
 				
