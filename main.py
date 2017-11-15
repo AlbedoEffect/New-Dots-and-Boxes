@@ -1,4 +1,5 @@
 from board import *
+from disp import *
 from player import *
 board = game_board(4,4)
 player = Ai_Player()
