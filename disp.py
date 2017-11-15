@@ -1,12 +1,23 @@
 from graphics import *
+from abc import ABCMeta, abstractmethod
 import board
-class graphic_display:
+
+class display:
+	__metaclass__ = ABCMeta
+	self.squaresState = []
+	self.linesState = [[[0 for x in range(cols)]for y in range(rows+1)],[[x for y in range(rows)] for y in range(cols+1)]]
+	@abstractmethod
+	def update_line(self,x,y,z,val):
+	
+	@abstractmethod
+	def update_square(self,x,val):
+
+class graphic_display(display):
 	def __init__(self,rows,cols):
 		self.win = GraphWin()
 		lin_len = 20
 		line_width = 5
-		self.squaresState = []
-		self.linesState = [[[0 for x in range(cols)]for y in range(rows+1)],[[x for y in range(rows)] for y in range(cols+1)]]
+
 		self.base_pt = Point(50,50)
 
 		for x in range(rows*cols):
@@ -28,5 +39,7 @@ class graphic_display:
 				self.linesState[1][x][y] = (Rectangle(self.pt,Point(self.pt.x+line_width,self.pt.y+line_len)))
 				self.linesStates[1][x][y].draw(self.win)
 				self.pt.x += line_len + line_width
-		
-			
+
+	def update_line(self,x,y,z,val):
+
+	def update_square(self,x,val):

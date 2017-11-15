@@ -10,13 +10,13 @@ class board_square:
 		self.valid = True
 
 	def line_filled(self,val):
-		if val == 0:
-			val = val
-			fillCount+=1
+		if self.val == 0:
+			self.val = val
+			self.fillCount+=1
 		elif val != self.val:
-			self.valid = false
+			self.valid = False
 		else:
-			fillCount+=1
+			self.fillCount+=1
 
 	def is_complete_point(self,val):
 		self.isComplete() and self.valid
@@ -42,7 +42,7 @@ class game_board:
 	def reset_board(self):
 		self.boardState = [[[0 for y in range(cols)] for x in range(rows+1)], [[0 for x in range(rows)] for y in range(cols+1)]]
 		
-	def get_affected_squares(self,x,y):
+	def get_affected_squares(self,x,y,z):
 		if z == 0:
 			if y == 0 or y == self.rows+1 :
 				return [self.squaresState[y*self.cols + x]]
@@ -55,19 +55,22 @@ class game_board:
 				return [self.squaresState[x*self.cols+y],self.squaresState[x*self.cols+y-1]]
 	
 	def completes_square(self,x,y,z,val):
-		for square in self.get_affected_squares(x,y):
-			if square.completes_square(x,y,val):
+		for square in self.get_affected_squares(x,y,z):
+			if square.completes_square(val):
 				return True
-		return false
+		return False
 
 	def is_valid_move(self,x,y,z,val):
 		return self.boardState[z][y][x] == 0
 		
 	
 	def play_move(self,x,y,z,val):
-		completesSquare = self.completes_square(x,y,z,val)
-		self.boardState[z][x][y] = vasdd
-		return completesSquare
+		if self.is_valid_move(x,y,z,val):
+			completesSquare = self.completes_square(x,y,z,val)
+			for square in self.get_affected_squares(x,y,z):
+				square.line_filled(val)
+			self.boardState[z][y][x] = val
+			return completesSquare
 		
 	def evaluate_board(self):
 		total = 0
@@ -78,6 +81,6 @@ class game_board:
 	def is_full(self):
 		for i in range(self.rows*self.cols):
 			if not self.squaresState[i].is_complete():
-				return false
+				return False
 		return True
 				
